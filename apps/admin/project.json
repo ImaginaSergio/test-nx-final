@@ -10,12 +10,16 @@
       "options": {
         "compiler": "babel",
         "outputPath": "dist/apps/admin",
-        "index": "apps/admin/src/index.html",
+        "index": "apps/admin/src/public/index.html",
         "baseHref": "/",
-        "main": "apps/admin/src/main.tsx",
+        "main": "apps/admin/src/index.tsx",
         "polyfills": "apps/admin/src/polyfills.ts",
         "tsConfig": "apps/admin/tsconfig.app.json",
-        "assets": ["apps/admin/src/favicon.ico", "apps/admin/src/assets"],
+        "assets": [
+          "apps/admin/src/public/favicon.ico",
+          "apps/admin/src/public/favicon_imagina.ico",
+          "apps/admin/src/assets"
+        ],
         "styles": ["apps/admin/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
