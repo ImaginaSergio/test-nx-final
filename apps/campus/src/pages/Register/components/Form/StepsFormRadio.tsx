@@ -9,7 +9,7 @@ type FormRadioProps = {
   name: string;
   label?: string;
   controlStyle?: React.CSSProperties;
-  onBlur?: Function;
+  onBlur?: (e?: any) => void | any;
   labelColor?: string;
   options: any;
 };

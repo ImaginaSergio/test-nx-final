@@ -7,7 +7,7 @@ type FormCheckboxProps = {
   inputRef?: any;
   name: string;
   label?: string;
-  onBlur?: Function;
+  onBlur?: (e?: any) => void | any;
   labelColor?: string;
   controlStyle?: React.CSSProperties;
 };

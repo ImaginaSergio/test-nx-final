@@ -33,8 +33,8 @@ export const EntregaTarea = ({
   realizarEntrega,
 }: {
   entregable?: IEntregable;
-  setEntregable: Function;
-  realizarEntrega: Function;
+  setEntregable: (e?: any) => void | any;
+  realizarEntrega: () => void;
 }) => {
   const toast = useToast();
 

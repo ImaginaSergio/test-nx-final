@@ -26,7 +26,7 @@ type FormInputProps = {
   type?: string;
   controlStyle?: React.CSSProperties;
   groupStyle?: React.CSSProperties;
-  onBlur?: Function;
+  onBlur?: (e?: any) => void | any;
   isDisabled?: boolean;
   color?: string;
   gradient?: any;
@@ -57,14 +57,23 @@ export const FormInput = ({
   const treatValue = (value: any) => {
     if (!value) return '';
 
-    return type === 'date' ? new Date(value).toISOString().substring(0, 10) : value;
+    return type === 'date'
+      ? new Date(value).toISOString().substring(0, 10)
+      : value;
   };
 
   return (
     <Field name={name}>
       {({ field, form }: { field: any; form: any }) => (
-        <FormControl style={controlStyle} isInvalid={form.errors[name] && form.touched[name]}>
-          <FormLabel className="form-label" htmlFor={name} color={labelColor || '#84889A'}>
+        <FormControl
+          style={controlStyle}
+          isInvalid={form.errors[name] && form.touched[name]}
+        >
+          <FormLabel
+            className="form-label"
+            htmlFor={name}
+            color={labelColor || '#84889A'}
+          >
             {label}
           </FormLabel>
 

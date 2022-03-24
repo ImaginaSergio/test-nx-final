@@ -159,7 +159,7 @@ const FormLoginForm = ({
   onRegister: () => void;
   onPassRecovery: () => void;
   isLoggingIn: boolean;
-  setIsLoggingIn: Function;
+  setIsLoggingIn: (e?: any) => void | any;
   requires2FA: boolean;
 }) => {
   const initialValues = { email: '', password: '', remember: false };

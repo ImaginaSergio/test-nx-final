@@ -25,7 +25,7 @@ import {
   FavoritoTipoEnum,
 } from '@clevery-lms/data';
 
-const ComunidadList = ({ setLastQuery }: { setLastQuery: Function }) => {
+const ComunidadList = ({ setLastQuery }: { setLastQuery: () => void }) => {
   const navigate = useNavigate();
   const { user } = useContext(LoginContext);
 
