@@ -1,0 +1,28 @@
+{
+  "root": "apps/campus-e2e",
+  "sourceRoot": "apps/campus-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/campus-e2e/cypress.json",
+        "devServerTarget": "campus:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "campus:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/campus-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["campus"]
+}
