@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@clevery-lms/data": ["libs/data/src/index.ts"],
+      "@clevery-lms/ui": ["libs/ui/src/index.ts"],
+      "@clevery-lms/utils": ["libs/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

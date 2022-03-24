@@ -2,6 +2,9 @@
   "version": 2,
   "projects": {
     "campus": "apps/campus",
-    "campus-e2e": "apps/campus-e2e"
+    "campus-e2e": "apps/campus-e2e",
+    "data": "libs/data",
+    "ui": "libs/ui",
+    "utils": "libs/utils"
   }
 }
