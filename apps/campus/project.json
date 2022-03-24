@@ -12,7 +12,7 @@
         "outputPath": "dist/apps/campus",
         "index": "apps/campus/src/index.html",
         "baseHref": "/",
-        "main": "apps/campus/src/main.tsx",
+        "main": "apps/campus/src/index.tsx",
         "polyfills": "apps/campus/src/polyfills.ts",
         "tsConfig": "apps/campus/tsconfig.app.json",
         "assets": ["apps/campus/src/favicon.ico", "apps/campus/src/assets"],
@@ -41,7 +41,8 @@
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "campus:build",
-        "hmr": true
+        "hmr": true,
+        "port": 3000
       },
       "configurations": {
         "production": {
