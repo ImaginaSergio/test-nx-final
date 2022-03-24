@@ -35,7 +35,7 @@ export const useLeccion = ({ id = 0, query = [], client }: PropsByID) => {
   if (!id) return { leccion: undefined, isLoading: true, isError: undefined };
 
   let [queryTxt, errors] = extractQuery(query);
-  const { data, error } = useSWR(`${client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS}${id}${queryTxt}`, (e) => get(e));
+  const { data, error } = useSWR(`${client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS}${id}${queryTxt}`, (e: any) => get(e));
 
   return {
     leccion: data?.error === undefined ? data.data : undefined,

@@ -85,7 +85,7 @@ export const getUserByID = async ({ id, client = 'campus' }: PropsByID) => {
     });
 
     const progresoTotal = cursos
-      ?.map((curso) => curso.meta.progreso_count)
+      ?.map((curso) => curso?.meta?.progreso_count)
       ?.reduce((prev, next) => prev + next, 0);
     const porcentajeProgresoTotal =
       (progresoTotal / (cursos?.length * 100)) * 100;

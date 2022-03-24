@@ -71,7 +71,7 @@ export const useCurso = ({
 
   const { data, error } = useSWR(
     `${client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS}${id}${queryTxt}`,
-    (e) =>
+    (e: any) =>
       get(e).then((data) => {
         if (data.isAxiosError) return { error: data };
         else if (client === 'admin') return data?.data;
@@ -203,12 +203,13 @@ const treatDataCurso = async ({
       leccion.meta = { ...leccion.meta, isBlocked: isLeccionBlocked };
     });
 
-    modulo.meta = {
-      ...modulo.meta,
-      isBlocked: isModuloBlocked,
-      leccionesCount: modulo.lecciones?.length || 0,
-      progresos_count: progresosDelModelo?.length || 0,
-    };
+    if (modulo)
+      modulo.meta = {
+        ...modulo.meta,
+        isBlocked: isModuloBlocked,
+        leccionesCount: modulo.lecciones?.length || 0,
+        progresos_count: progresosDelModelo?.length || 0,
+      };
   });
 
   return dataCurso.data;
