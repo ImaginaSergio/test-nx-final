@@ -208,6 +208,7 @@ const treatDataCurso = async ({
         ...modulo.meta,
         isBlocked: isModuloBlocked,
         leccionesCount: modulo.lecciones?.length || 0,
+        duracionTotal: modulo.meta?.duracionTotal || 0,
         progresos_count: progresosDelModelo?.length || 0,
       };
   });
