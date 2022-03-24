@@ -1,7 +1,7 @@
 import { Center, Image } from '@chakra-ui/react';
 
 import stc from 'string-to-color';
-import { isColorBright } from '@clevery/utils';
+import { isColorBright } from '@clevery-lms/utils';
 
 import './Avatar.module.scss';
 
@@ -21,10 +21,27 @@ interface AvatarProps {
 /**
  * Primary UI component for user interaction
  */
-export const Avatar = ({ src, name, size, fontSize, outline, ...props }: AvatarProps) => {
+export const Avatar = ({
+  src,
+  name,
+  size,
+  fontSize,
+  outline,
+  ...props
+}: AvatarProps) => {
   let bg = stc(name);
   return src ? (
-    <Image fit="cover" minW={size} minH={size} h={size} w={size} rounded="150px" alt={name} src={src} {...props} />
+    <Image
+      fit="cover"
+      minW={size}
+      minH={size}
+      h={size}
+      w={size}
+      rounded="150px"
+      alt={name}
+      src={src}
+      {...props}
+    />
   ) : (
     <Center
       color={isColorBright(bg) ? 'black' : 'white'}

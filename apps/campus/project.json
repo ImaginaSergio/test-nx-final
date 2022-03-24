@@ -15,7 +15,11 @@
         "main": "apps/campus/src/index.tsx",
         "polyfills": "apps/campus/src/polyfills.ts",
         "tsConfig": "apps/campus/tsconfig.app.json",
-        "assets": ["apps/campus/src/favicon.ico", "apps/campus/src/assets"],
+        "assets": [
+          "apps/campus/src/public/favicon.ico",
+          "apps/campus/src/public/favicon_imagina.ico",
+          "apps/campus/src/assets"
+        ],
         "styles": ["apps/campus/src/styles.scss"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"

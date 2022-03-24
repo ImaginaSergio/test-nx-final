@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Flex } from '@chakra-ui/react';
-import { textParserMd } from '@clevery/utils';
+import { textParserMd } from '@clevery-lms/utils';
 
 import { lowlight } from 'lowlight';
 import Link from '@tiptap/extension-link';
@@ -20,7 +20,12 @@ export const OpenParser = ({ value }: OpenParserProps) => {
   const editor = useEditor({
     editable: false,
     content: textParserMd(value || ''),
-    extensions: [StarterKit, Link, Image.configure({ inline: true }), CodeBlockLowlight.configure({ lowlight })],
+    extensions: [
+      StarterKit,
+      Link,
+      Image.configure({ inline: true }),
+      CodeBlockLowlight.configure({ lowlight }),
+    ],
   });
 
   useEffect(() => {

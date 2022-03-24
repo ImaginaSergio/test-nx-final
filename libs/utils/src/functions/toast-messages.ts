@@ -1,6 +1,15 @@
-import { FailureToastComponent, WarningToastComponent, SuccessToastComponent, SuccessToastComponent_Undo } from '@clevery/ui';
+import {
+  FailureToastComponent,
+  WarningToastComponent,
+  SuccessToastComponent,
+  SuccessToastComponent_Undo,
+} from '@clevery-lms/ui';
 
-const onSuccess = (toast: any, title: string | React.ReactNode, duration = 3000) => {
+const onSuccess = (
+  toast: any,
+  title: string | React.ReactNode,
+  duration = 3000
+) => {
   toast({
     duration: duration,
     isClosable: true,
@@ -8,7 +17,12 @@ const onSuccess = (toast: any, title: string | React.ReactNode, duration = 3000)
   });
 };
 
-const onSuccess_Undo = (toast: any, title: string | React.ReactNode, timeout: any, duration = 5000) => {
+const onSuccess_Undo = (
+  toast: any,
+  title: string | React.ReactNode,
+  timeout: any,
+  duration = 5000
+) => {
   toast({
     duration: duration,
     isClosable: true,
@@ -16,7 +30,12 @@ const onSuccess_Undo = (toast: any, title: string | React.ReactNode, timeout: an
   });
 };
 
-const onFailure = (toast: any, title: string | React.ReactNode, description: string | React.ReactNode, duration = 5000) => {
+const onFailure = (
+  toast: any,
+  title: string | React.ReactNode,
+  description: string | React.ReactNode,
+  duration = 5000
+) => {
   toast({
     duration: duration,
     isClosable: true,
@@ -24,7 +43,12 @@ const onFailure = (toast: any, title: string | React.ReactNode, description: str
   });
 };
 
-const onWarning = (toast: any, title: string | React.ReactNode, description: string | React.ReactNode, duration = 5000) => {
+const onWarning = (
+  toast: any,
+  title: string | React.ReactNode,
+  description: string | React.ReactNode,
+  duration = 5000
+) => {
   toast({
     duration: duration,
     isClosable: true,

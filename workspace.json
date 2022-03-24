@@ -1,6 +1,8 @@
 {
   "version": 2,
   "projects": {
+    "admin": "apps/admin",
+    "admin-e2e": "apps/admin-e2e",
     "campus": "apps/campus",
     "campus-e2e": "apps/campus-e2e",
     "data": "libs/data",

@@ -9,15 +9,20 @@ import {
 import { ICurso } from '../../models';
 import { getCursos } from '../cursos/curso.middleware';
 import { put, get, post } from '../../services';
-import { fmtTiempoTotal, stringToNumArray } from '@clevery/utils';
+import { fmtTiempoTotal, stringToNumArray } from '@clevery-lms/utils';
 import { extractQuery } from '../_utils';
 
 const ENDPOINT_ADMIN = '/godAPI/users/';
 const ENDPOINT_CAMPUS = '/openAPI/users/';
 
-export const getUsers = async ({ query = [], client = 'campus' }: PropsByQuery) => {
+export const getUsers = async ({
+  query = [],
+  client = 'campus',
+}: PropsByQuery) => {
   let [queryTxt, errors] = extractQuery(query);
-  const dataUsers: GET_HttpResponse = await get((client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + queryTxt);
+  const dataUsers: GET_HttpResponse = await get(
+    (client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + queryTxt
+  );
 
   if (!dataUsers || dataUsers instanceof Error) return undefined;
   else return dataUsers.data;
@@ -37,25 +42,41 @@ export const getUserByID = async ({ id, client = 'campus' }: PropsByID) => {
   else {
     const indexCertisToFilter: number[] = [];
 
-    dataUser?.data?.certificaciones?.forEach((certificacion: any, index: number) => {
-      if (
-        !dataUser?.data?.certificaciones?.find(
-          (c: any) => c.id === certificacion.id && c.meta.pivot_intento > certificacion.meta.pivot_intento
+    dataUser?.data?.certificaciones?.forEach(
+      (certificacion: any, index: number) => {
+        if (
+          !dataUser?.data?.certificaciones?.find(
+            (c: any) =>
+              c.id === certificacion.id &&
+              c.meta.pivot_intento > certificacion.meta.pivot_intento
+          )
         )
-      )
-        indexCertisToFilter.push(index);
-    });
-
-    dataUser.data.certificaciones = dataUser.data?.certificaciones?.filter((c: any, index: number) =>
-      indexCertisToFilter.includes(index)
+          indexCertisToFilter.push(index);
+      }
     );
 
-    const rutasCompletadas = stringToNumArray(dataUser.data.rutasCompletadas || ''),
-      rutaActual = stringToNumArray(dataUser.data.progresoGlobal?.ruta?.itinerario || ''),
-      _cursosIniciados = stringToNumArray(dataUser.data.progresoGlobal?.cursosIniciados || ''),
-      _cursosCompletados = stringToNumArray(dataUser.data.progresoGlobal?.cursosCompletados || ''),
-      _certificacionesIniciadas = stringToNumArray(dataUser.data.progresoGlobal?.certificacionesIniciadas || ''),
-      _certificacionesCompletadas = stringToNumArray(dataUser.data.progresoGlobal?.certificacionesCompletadas || '');
+    dataUser.data.certificaciones = dataUser.data?.certificaciones?.filter(
+      (c: any, index: number) => indexCertisToFilter.includes(index)
+    );
+
+    const rutasCompletadas = stringToNumArray(
+        dataUser.data.rutasCompletadas || ''
+      ),
+      rutaActual = stringToNumArray(
+        dataUser.data.progresoGlobal?.ruta?.itinerario || ''
+      ),
+      _cursosIniciados = stringToNumArray(
+        dataUser.data.progresoGlobal?.cursosIniciados || ''
+      ),
+      _cursosCompletados = stringToNumArray(
+        dataUser.data.progresoGlobal?.cursosCompletados || ''
+      ),
+      _certificacionesIniciadas = stringToNumArray(
+        dataUser.data.progresoGlobal?.certificacionesIniciadas || ''
+      ),
+      _certificacionesCompletadas = stringToNumArray(
+        dataUser.data.progresoGlobal?.certificacionesCompletadas || ''
+      );
 
     const cursos: ICurso[] = await getCursos({
       query: [{ ruta: `[${rutaActual || ''}]` }],
@@ -63,13 +84,18 @@ export const getUserByID = async ({ id, client = 'campus' }: PropsByID) => {
       client: 'campus',
     });
 
-    const progresoTotal = cursos?.map((curso) => curso.meta.progreso_count)?.reduce((prev, next) => prev + next, 0);
-    const porcentajeProgresoTotal = (progresoTotal / (cursos?.length * 100)) * 100;
+    const progresoTotal = cursos
+      ?.map((curso) => curso.meta.progreso_count)
+      ?.reduce((prev, next) => prev + next, 0);
+    const porcentajeProgresoTotal =
+      (progresoTotal / (cursos?.length * 100)) * 100;
 
     dataUser.data.meta = { rutasCompletadas_list: rutasCompletadas };
 
     if (dataUser.data.progresoGlobal) {
-      dataUser.data.progresoGlobal.tiempoTotal = fmtTiempoTotal(dataUser.data.progresoGlobal?.tiempoTotal);
+      dataUser.data.progresoGlobal.tiempoTotal = fmtTiempoTotal(
+        dataUser.data.progresoGlobal?.tiempoTotal
+      );
 
       dataUser.data.progresoGlobal.meta = {
         progresoCursos: Math.min(100, Math.floor(porcentajeProgresoTotal)),
@@ -80,7 +106,9 @@ export const getUserByID = async ({ id, client = 'campus' }: PropsByID) => {
       };
 
       dataUser.data.progresoGlobal.ruta.meta = {
-        itinerario: stringToNumArray(dataUser.data.progresoGlobal.ruta.itinerario || ''),
+        itinerario: stringToNumArray(
+          dataUser.data.progresoGlobal.ruta.itinerario || ''
+        ),
       };
     }
 
@@ -100,7 +128,8 @@ export const removeAvatar = ({ id }: PropsByID) => {
     .catch((error: PUT_HttpResponse) => {
       throw {
         title: 'Error inesperado',
-        message: error.message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          error.message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -117,13 +146,18 @@ export const createUser = ({ user }: { user: any }) => {
     .catch((error: PUT_HttpResponse) => {
       throw {
         title: 'Error inesperado',
-        message: error.message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          error.message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
 };
 
-export const updateUser = ({ id, client = 'campus', user }: PropsByID & { user: any }) => {
+export const updateUser = ({
+  id,
+  client = 'campus',
+  user,
+}: PropsByID & { user: any }) => {
   return put(client === 'admin' ? ENDPOINT_ADMIN + id : ENDPOINT_CAMPUS, user)
     .then((response: PUT_HttpResponse) => ({
       message: `Usuario actualizado correctamente.`,
@@ -133,7 +167,8 @@ export const updateUser = ({ id, client = 'campus', user }: PropsByID & { user: 
     .catch((error: PUT_HttpResponse) => {
       throw {
         title: 'Error inesperado',
-        message: error.message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          error.message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -152,7 +187,8 @@ export const uploadAvatar = ({ files }: { files: File[] }) => {
     .catch((error: PUT_HttpResponse) => {
       throw {
         title: 'Error inesperado',
-        message: error.message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          error.message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -163,7 +199,11 @@ export const uploadAvatar = ({ files }: { files: File[] }) => {
  * Deshabilitamos la sesión de onboarding para nuevos usuarios,
  * para que dicho hashCode sea inválido.
  */
-export const disableOnboardingSession = ({ hashCode }: { hashCode: string }) => {
+export const disableOnboardingSession = ({
+  hashCode,
+}: {
+  hashCode: string;
+}) => {
   return post(`/openAPI/disableOnboardingSession`, { hashCode })
     .then((res) => res)
     .catch((error) => {
@@ -190,12 +230,17 @@ export const addUser = ({ user }: { user: any }) => {
     .catch((error: POST_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -211,12 +256,17 @@ export const resendCredentials = ({ id }: PropsByID) => {
     .catch((error: POST_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });

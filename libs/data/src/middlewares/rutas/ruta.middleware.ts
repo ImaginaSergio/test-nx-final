@@ -8,16 +8,21 @@ import {
   REMOVE_HttpResponse,
 } from '../_middleware';
 import { IRuta } from '../../models';
-import { stringToNumArray } from '@clevery/utils';
+import { stringToNumArray } from '@clevery-lms/utils';
 import { get, post, put, remove } from '../../services';
 import { extractQuery } from '../_utils';
 
 const ENDPOINT_ADMIN = '/godAPI/rutas/';
 const ENDPOINT_CAMPUS = '/openAPI/rutas/';
 
-export const getRutas = async ({ query = [], client = 'campus' }: PropsByQuery) => {
+export const getRutas = async ({
+  query = [],
+  client = 'campus',
+}: PropsByQuery) => {
   let [queryTxt, errors] = extractQuery(query);
-  const dataRutas: GET_HttpResponse = await get((client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + queryTxt);
+  const dataRutas: GET_HttpResponse = await get(
+    (client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + queryTxt
+  );
 
   if (!dataRutas || dataRutas instanceof Error) return undefined;
   else {
@@ -30,11 +35,15 @@ export const getRutas = async ({ query = [], client = 'campus' }: PropsByQuery) 
 };
 
 export const getRutaByID = async ({ id, client }: PropsByID) => {
-  const dataRuta: GETID_HttpResponse = await get((client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + id);
+  const dataRuta: GETID_HttpResponse = await get(
+    (client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + id
+  );
 
   if (!dataRuta || dataRuta instanceof Error) return undefined;
   else {
-    dataRuta.data.meta = { itinerario: stringToNumArray(dataRuta.data.itinerario || '') };
+    dataRuta.data.meta = {
+      itinerario: stringToNumArray(dataRuta.data.itinerario || ''),
+    };
 
     return dataRuta.data;
   }
@@ -50,13 +59,18 @@ export const addRuta = ({ ruta }: { ruta: IRuta }) => {
     .catch((error: POST_HttpResponse) => {
       throw {
         title: 'Error inesperado',
-        message: error.message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          error.message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
 };
 
-export const updateRuta = ({ id, client = 'campus', ruta }: PropsByID & { ruta: any }) => {
+export const updateRuta = ({
+  id,
+  client = 'campus',
+  ruta,
+}: PropsByID & { ruta: any }) => {
   return put(ENDPOINT_ADMIN + id, ruta)
     .then((response: PUT_HttpResponse) => ({
       message: `Ruta actualizada correctamente.`,
@@ -66,12 +80,17 @@ export const updateRuta = ({ id, client = 'campus', ruta }: PropsByID & { ruta: 
     .catch((error: PUT_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -87,12 +106,17 @@ export const removeRuta = ({ id }: PropsByID) => {
     .catch((error: REMOVE_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
