@@ -95,7 +95,7 @@ export const LeccionesPlayer = ({
 
   function updateProgresoVideo() {
     if (leccion?.id && progresoGlobal?.progresoLecciones) {
-      let _progresoLecciones = progresoGlobal?.progresoLecciones;
+      const _progresoLecciones = progresoGlobal?.progresoLecciones;
 
       _progresoLecciones[leccion?.id] = playedSeconds;
       _progresoLecciones.lastPlayed = leccion?.id;
@@ -114,8 +114,8 @@ export const LeccionesPlayer = ({
   }, []);
 
   useEffect(() => {
-    let progresoLecciones: any = progresoGlobal?.progresoLecciones;
-    let segundos =
+    const progresoLecciones: any = progresoGlobal?.progresoLecciones;
+    const segundos =
       progresoLecciones && leccion?.id ? progresoLecciones[leccion?.id] : 0;
 
     setPlayedSeconds(segundos);
@@ -412,8 +412,7 @@ export const LeccionesPlayer = ({
             )}
 
             {isMobilePlayer && (
-              <>
-                <Menu placement="top">
+              <Menu placement="top">
                   <Tooltip placement="top" label="Ajustes">
                     <MenuButton
                       _hover={{ bg: 'transparent' }}
@@ -515,7 +514,6 @@ export const LeccionesPlayer = ({
                     </Menu>
                   </MenuList>
                 </Menu>
-              </>
             )}
 
             {!isMobilePlayer && (

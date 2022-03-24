@@ -39,7 +39,7 @@ export const DiscordWidget = () => {
 
     updateUser({ id: user.id, user: { preferencias: { showDiscord: false } } })
       .then(async (res) => {
-        let dataUser = await getUserByID({ id: user.id || 0 });
+        const dataUser = await getUserByID({ id: user.id || 0 });
 
         if (!dataUser.isAxiosError) setUser({ ...dataUser });
         else console.error({ error: dataUser });

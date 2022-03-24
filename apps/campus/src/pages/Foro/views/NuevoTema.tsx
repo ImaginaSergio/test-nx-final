@@ -63,7 +63,7 @@ const NuevoTema = () => {
   }
 
   const loadCursos = async (value: string) => {
-    let _cursos = await getCursos({
+    const _cursos = await getCursos({
       query: [{ titulo: value }],
       treatData: false,
     });
@@ -75,7 +75,7 @@ const NuevoTema = () => {
   };
 
   const loadModulos = async (value: string, cursoId?: number) => {
-    let data = await getModulos({
+    const data = await getModulos({
       query: [{ titulo: value }, { curso_id: cursoId }],
     });
     return data?.data?.map((user: any) => ({

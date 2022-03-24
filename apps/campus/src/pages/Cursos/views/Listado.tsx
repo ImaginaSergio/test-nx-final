@@ -104,8 +104,8 @@ const Listado = () => {
 
     query += `&order=${order}`;
 
-    let auxQuery = query.split('&').map((item) => {
-      let split = item.split('=');
+    const auxQuery = query.split('&').map((item) => {
+      const split = item.split('=');
       return { [split[0]]: split[1] };
     });
 

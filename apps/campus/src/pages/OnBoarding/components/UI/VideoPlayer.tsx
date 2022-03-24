@@ -18,8 +18,8 @@ export const VideoPlayer = ({ onEnded }: { onEnded?: (event?: any) => void }) =>
   }, []);
 
   function handleKeyboardControls(event: KeyboardEvent) {
-    let currentSeconds = playerRef?.current?.getCurrentTime() || 0;
-    let totalSeconds = playerRef?.current?.getDuration();
+    const currentSeconds = playerRef?.current?.getCurrentTime() || 0;
+    const totalSeconds = playerRef?.current?.getDuration();
 
     if (event.code === 'ArrowRight') playerRef?.current?.seekTo(Math.min(currentSeconds + 60, totalSeconds));
     if (event.code === 'ArrowLeft') playerRef?.current?.seekTo(Math.max(currentSeconds - 60, 0));

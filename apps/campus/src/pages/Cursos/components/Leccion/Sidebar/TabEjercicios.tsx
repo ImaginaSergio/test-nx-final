@@ -18,7 +18,7 @@ const TabEjercicios = ({
     <Flex direction="column" overflow="overlay">
       {(curso?.modulos?.length || 0) > 0 ? (
         curso?.modulos?.map((modulo: IModulo, index: number) => {
-          let isOpened =
+          const isOpened =
             modulo?.lecciones?.find((l) => l.id === leccionId) !== undefined;
 
           return (

@@ -47,7 +47,7 @@ const TabNotas = ({
   const refreshStateNotas = async () => {
     if (!leccion?.id) return;
 
-    let notasData = await getNotas({
+    const notasData = await getNotas({
       query: [
         { user_id: userId },
         { leccion_id: leccion?.id },
@@ -101,7 +101,7 @@ const TabNotas = ({
   };
 
   const handleNewNota = async () => {
-    let _nota: any = await onNewNota();
+    const _nota: any = await onNewNota();
     setNota(_nota);
 
     setIsOpen(true);

@@ -40,8 +40,8 @@ export const RoadmapModal = ({
   }, [isOpen]);
 
   const refreshRuta = async () => {
-    let dataRuta = await getRutaByID({ id: proceso?.rutaId });
-    let dataItinerario = await getCursos({
+    const dataRuta = await getRutaByID({ id: proceso?.rutaId });
+    const dataItinerario = await getCursos({
       query: [{ ruta: dataRuta?.itinerario }],
       userId: user?.id,
     });

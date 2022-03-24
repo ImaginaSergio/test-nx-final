@@ -82,7 +82,7 @@ const PerfilSettings = () => {
       },
     })
       .then(async (res) => {
-        let dataUser = await getUserByID({ id: user?.id || 0 });
+        const dataUser = await getUserByID({ id: user?.id || 0 });
 
         if (!dataUser.isAxiosError) {
           setUser({ ...dataUser });
@@ -102,7 +102,7 @@ const PerfilSettings = () => {
       return;
     }
 
-    let dataUser = await getUserByID({ id: user.id });
+    const dataUser = await getUserByID({ id: user.id });
 
     if (!dataUser.isAxiosError) {
       await setUser({ ...dataUser });
@@ -124,7 +124,7 @@ const PerfilSettings = () => {
 
     await removeAvatar({ id: user?.id })
       .then(async () => {
-        let dataUser = await getUserByID({ id: user?.id || 0 });
+        const dataUser = await getUserByID({ id: user?.id || 0 });
 
         if (!dataUser.isAxiosError) {
           setUser({ ...dataUser });
@@ -138,7 +138,7 @@ const PerfilSettings = () => {
   const handleUpload = async (acceptedFiles: File[]) => {
     setIsUploadingAvatar(true);
 
-    let data = await uploadAvatar({ files: acceptedFiles });
+    const data = await uploadAvatar({ files: acceptedFiles });
     await onAvatarLoad(data);
 
     setIsUploadingAvatar(false);
@@ -150,7 +150,7 @@ const PerfilSettings = () => {
 
   const validateUsername = async (value: string) => {
     let error;
-    let res: any = await checkIfUsernameExists({ username: value });
+    const res: any = await checkIfUsernameExists({ username: value });
 
     if (res?.isAxiosError || res.isError) error = res.message;
 

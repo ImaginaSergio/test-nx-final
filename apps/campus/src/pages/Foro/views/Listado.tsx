@@ -35,7 +35,7 @@ const ForoList = () => {
   const { data: temas, isLoading } = useForoTemas({ query: queryTemas });
 
   useEffect(() => {
-    let lState: any = location.state;
+    const lState: any = location.state;
 
     // Al entrar a la página de foros sin hash,
     // seleccionamos el primer curso de la hoja de ruta
@@ -47,7 +47,7 @@ const ForoList = () => {
   useEffect(() => {
     if (ruta) {
       (async () => {
-        let _cursos = await getCursos({
+        const _cursos = await getCursos({
           query: [{ limit: 1000 }],
           treatData: false,
         });
@@ -76,9 +76,9 @@ const ForoList = () => {
   /** Actualizamos el curso que obtenemos del ID del hashcode de la página, para
    * mostrar correctamente los temas correspondientes del foro. */
   const refreshCursoInHash = (cursos: ICurso[]) => {
-    let lState: any = location.state;
+    const lState: any = location.state;
 
-    let curso = cursos?.find(
+    const curso = cursos?.find(
       (c: ICurso) => (lState?.cursoId || '') === +(c.id || 0)
     );
     setCursoInHash(curso);

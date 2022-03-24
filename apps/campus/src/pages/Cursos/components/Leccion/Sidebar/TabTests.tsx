@@ -7,7 +7,7 @@ import { LoginContext } from '../../../../../shared/context';
 import { CardExamen } from '../../../../../shared/components';
 
 const TabTests = ({ cursoId, onExamenSelect }: any) => {
-  let { user } = useContext(LoginContext);
+  const { user } = useContext(LoginContext);
 
   const [examenes, setExamenes] = useState<IExamen[]>([]);
 
@@ -18,7 +18,7 @@ const TabTests = ({ cursoId, onExamenSelect }: any) => {
   const refreshStateExamenes = async () => {
     if (!cursoId) return;
 
-    let examenesData = await getExamenes({
+    const examenesData = await getExamenes({
       query: [{ cursos: `[${cursoId}]` }, { es_certificacion: false }],
     });
     setExamenes(examenesData?.data || []);

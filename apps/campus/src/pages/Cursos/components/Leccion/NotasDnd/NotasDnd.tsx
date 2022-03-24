@@ -216,7 +216,7 @@ export const NotasDnd = ({
   const refreshStateNotas = async () => {
     if (!leccion?.id) return;
 
-    let notasData = await getNotas({
+    const notasData = await getNotas({
       query: [
         { user_id: user?.id },
         { leccion_id: leccion?.id },

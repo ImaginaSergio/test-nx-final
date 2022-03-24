@@ -67,34 +67,34 @@ const Leccion = () => {
   }, [cursoId, leccionId]);
 
   const refreshState = async (updateProgresoGlobal?: boolean) => {
-    let cursoData = await getCurso({ id: +(cursoId || 0), userId: user?.id });
+    const cursoData = await getCurso({ id: +(cursoId || 0), userId: user?.id });
 
     if (cursoData.error === 404) navigate('/');
     if (!leccionId) return;
 
     setCurso(cursoData);
 
-    let leccionData = await getLeccionByID({ id: +(leccionId || 0) });
+    const leccionData = await getLeccionByID({ id: +(leccionId || 0) });
     setLeccion(leccionData);
 
     if (updateProgresoGlobal) {
-      let lastModulo =
+      const lastModulo =
         cursoData?.modulos?.length > 0
           ? cursoData.modulos[cursoData.modulos.length - 1]
           : undefined;
 
-      let firstLeccion =
+      const firstLeccion =
         cursoData?.modulos?.length > 0
           ? cursoData.modulos[0].lecciones[0]
           : undefined;
-      let lastLeccion =
+      const lastLeccion =
         lastModulo?.lecciones?.length > 0
           ? lastModulo?.lecciones[lastModulo?.lecciones?.length - 1]
           : undefined;
 
       // Si acabamos de empezar un curso, o lo hemos terminado, actualizamos el progresoGlobal de la context.
       if (firstLeccion?.id === +leccionId || lastLeccion?.id === +leccionId) {
-        let _progresoGlobal = await getProgresoGlobalByID({
+        const _progresoGlobal = await getProgresoGlobalByID({
           id: progresoGlobal?.id || 0,
         });
 
@@ -107,8 +107,8 @@ const Leccion = () => {
     if (!leccion) return;
     if (!curso) return;
 
-    let _modulo = curso?.modulos?.find((m: any) => leccion?.moduloId === m.id);
-    let _leccion = _modulo?.lecciones?.find((l: any) => leccion?.id === l.id);
+    const _modulo = curso?.modulos?.find((m: any) => leccion?.moduloId === m.id);
+    const _leccion = _modulo?.lecciones?.find((l: any) => leccion?.id === l.id);
 
     if (_leccion?.meta?.isBlocked) {
       onFailure(
@@ -128,7 +128,7 @@ const Leccion = () => {
   const onLeccionStarted = async (leccion: ILeccion) => {
     if (user?.id && curso?.id && leccion.id && leccion.moduloId) {
       // Comprobamos que no exista un progreso ya creado para esta lección y este usuario.
-      let progresoDuplicado = await getProgresos({
+      const progresoDuplicado = await getProgresos({
         query: [
           {
             user_id: user?.id,
@@ -188,7 +188,7 @@ const Leccion = () => {
       if (leccion?.moduloId === modulo.id) {
         // Si es la primera lección de módulo, seleccionamos el modulo anterior.
         if (leccion?.id === modulo.lecciones[0].id) {
-          let prevModulo = curso?.modulos
+          const prevModulo = curso?.modulos
             ? curso?.modulos[index - 1]
             : undefined;
 
@@ -198,7 +198,7 @@ const Leccion = () => {
               : undefined;
         } else {
           // Si aún quedan lecciones en el módulo, escogemos la anterior.
-          let index = modulo.lecciones?.findIndex(
+          const index = modulo.lecciones?.findIndex(
             (l: any) => l.id === leccion.id
           );
 
@@ -231,7 +231,7 @@ const Leccion = () => {
       if (leccion?.moduloId === modulo.id) {
         // Si es la última lección de módulo, seleccionamos el modulo siguiente
         if (leccion?.id === modulo.lecciones[modulo.lecciones?.length - 1].id) {
-          let nextModulo = curso?.modulos
+          const nextModulo = curso?.modulos
             ? curso?.modulos[index + 1]
             : undefined;
 
@@ -241,7 +241,7 @@ const Leccion = () => {
               : undefined;
         } else {
           // Si aún quedan lecciones en el módulo, escogemos la siguiente.
-          let index = modulo.lecciones?.findIndex(
+          const index = modulo.lecciones?.findIndex(
             (l: any) => l.id === leccion?.id
           );
 
@@ -265,7 +265,7 @@ const Leccion = () => {
 
   /* Método para navegar a la siguiente lección */
   const onNextLeccion = () => {
-    let nextLeccion: ILeccion = getNextLeccion();
+    const nextLeccion: ILeccion = getNextLeccion();
 
     if (nextLeccion) {
       // Si la lección es del tipo recurso, md o slide, autocompletamos la lección al pasar a la siguiente

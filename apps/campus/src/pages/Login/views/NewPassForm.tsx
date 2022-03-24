@@ -43,7 +43,7 @@ const NewPassForm = () => {
   }, [hashCode]);
 
   const onSubmit = async (password: string) => {
-    let { token, data, error } = await resetPassword({
+    const { token, data, error } = await resetPassword({
       hashCode: hashCode || '',
       password,
     });

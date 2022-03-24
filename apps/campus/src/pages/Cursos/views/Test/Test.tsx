@@ -26,7 +26,7 @@ const Test = () => {
   const [test, setTest] = useState<IExamen>();
   const [curso, setCurso] = useState<ICurso>();
 
-  let { user, setUser } = useContext(LoginContext);
+  const { user, setUser } = useContext(LoginContext);
   const { setShowHeader, setShowSidebar } = useContext(LayoutContext);
 
   useEffect(() => {
@@ -39,14 +39,14 @@ const Test = () => {
   }, [cursoId, testId]);
 
   const refreshState = async (updateProgresoGlobal?: boolean) => {
-    let cursoData = await getCurso({ id: +(cursoId || 0), userId: user?.id });
+    const cursoData = await getCurso({ id: +(cursoId || 0), userId: user?.id });
 
     if (cursoData.error === 404) navigate('/');
     if (!testId) return;
 
     setCurso(cursoData);
 
-    let testData = await getExamenByID({ id: +(testId || 0) });
+    const testData = await getExamenByID({ id: +(testId || 0) });
     setTest(testData);
   };
 
@@ -78,7 +78,7 @@ const Test = () => {
         });
 
         if (user?.id) {
-          let _user = await getUserByID({ id: user?.id });
+          const _user = await getUserByID({ id: user?.id });
           setUser({ ..._user });
         }
       })

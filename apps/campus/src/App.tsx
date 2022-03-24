@@ -97,8 +97,8 @@ function App() {
   } = useDisclosure();
 
   useEffect(() => {
-    let storageUser = getItem(LOGIN_USER);
-    let storageToken = getItem(LOGIN_TOKEN);
+    const storageUser = getItem(LOGIN_USER);
+    const storageToken = getItem(LOGIN_TOKEN);
 
     // Si existe token en localStorage probamos a hacer login con él.
     // Si no, limpiamos la información redundante.
@@ -112,7 +112,7 @@ function App() {
       setFirstLoad(false);
 
       if (user) {
-        let _themeMode: 'light' | 'dark' = getTheme(user);
+        const _themeMode: 'light' | 'dark' = getTheme(user);
 
         setThemeMode(_themeMode);
         localStorage.setItem('chakra-ui-color-mode', _themeMode);
@@ -121,7 +121,7 @@ function App() {
       // Cuando iniciemos sesión, cargamos listado de favoritos
       (async () => {
         if (user?.id) {
-          let dataFavoritos = await getFavoritos({
+          const dataFavoritos = await getFavoritos({
             query: [{ user_id: user?.id }, { limit: 10000 }],
             client: 'campus',
           });
@@ -154,7 +154,7 @@ function App() {
     else setItemWithExpire(LOGIN_TOKEN, _token.token);
 
     // Y también recuperamos los datos del usuario
-    let _user: IUser = await getUserByID({ id: userId, client: 'campus' });
+    const _user: IUser = await getUserByID({ id: userId, client: 'campus' });
 
     // Si encontramos algún error, dejamos la petición.
     if (!_user) {
@@ -196,7 +196,7 @@ function App() {
   };
 
   const removeFavorito = (favorito: IFavorito) => {
-    let last: any[] = [...favoritos]
+    const last: any[] = [...favoritos]
       ?.map((fav) =>
         fav.objetoId == favorito.objetoId &&
         fav.tipo === favorito.tipo &&

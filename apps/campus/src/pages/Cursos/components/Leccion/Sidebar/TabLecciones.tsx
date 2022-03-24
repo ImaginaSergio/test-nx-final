@@ -17,12 +17,12 @@ const TabLecciones = ({
   return (
     <Flex direction="column" overflow="overlay">
       {curso?.modulos?.map((modulo: IModulo, index: number) => {
-        let isCompleted =
+        const isCompleted =
           modulo.meta?.leccionesCount !== undefined &&
           modulo.meta?.progresos_count !== undefined &&
           modulo.meta?.progresos_count >= modulo.meta?.leccionesCount;
 
-        let isOpened =
+        const isOpened =
           modulo?.lecciones?.find((l) => l.id === leccionId) !== undefined;
 
         return (

@@ -113,7 +113,7 @@ const NuevaPregunta = () => {
             bg="white"
             border="1px solid var(--chakra-colors-gray_3)"
             onChange={(e) => {
-              let res: any = e.target.value;
+              const res: any = e.target.value;
               setTipo(res);
             }}
           >

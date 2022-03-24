@@ -16,7 +16,7 @@ const StepNombre = ({
 }) => {
   const validateEmail = async (value: string) => {
     let error;
-    let res: any = await checkIfEmailExists({ email: value });
+    const res: any = await checkIfEmailExists({ email: value });
 
     if (res?.isAxiosError || res.isError) error = res.message;
 

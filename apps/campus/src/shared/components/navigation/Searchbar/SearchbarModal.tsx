@@ -68,26 +68,26 @@ export const SearchbarModal = ({
   }, [isOpen]);
 
   const onSearch = async (event: any) => {
-    let text = event.target.value;
+    const text = event.target.value;
     setSearch(text);
 
     if (text === '') setQuery(undefined);
     else {
-      let _query = await get('/godAPI/search?query=' + text + '&limit=7');
+      const _query = await get('/godAPI/search?query=' + text + '&limit=7');
 
       setQuery(
         (_query?.data || [])?.map((item: any) => {
-          let [type, id] = item?._id?.split('-'); // Curso-55/Leccion-1448
+          const [type, id] = item?._id?.split('-'); // Curso-55/Leccion-1448
 
-          let relacion = (item?._source?.relacion || '')?.split('/');
+          const relacion = (item?._source?.relacion || '')?.split('/');
 
-          let [typeRelacion1, idRelacion1] = relacion[0]?.split('-');
-          let [typeRelacion2, idRelacion2] =
+          const [typeRelacion1, idRelacion1] = relacion[0]?.split('-');
+          const [typeRelacion2, idRelacion2] =
             relacion.length > 1
               ? relacion[1]?.split('-')
               : [undefined, undefined];
 
-          let hl =
+          const hl =
             (item?.highlight?.titulo?.length || 0) > 0
               ? item?.highlight?.titulo[0]
               : item?._source?.titulo || '';

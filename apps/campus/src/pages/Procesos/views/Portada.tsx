@@ -60,7 +60,7 @@ const ProcesosCover = () => {
   const { progresoGlobal } = useContext(ProgresoGlobalContext);
 
   const { proceso, isLoading } = useProceso({ id: +(procesoId || 0) });
-  const { isAbleToApply: isAbleToApply, isLoading: isCheckingApplyability } =
+  const { isAbleToApply, isLoading: isCheckingApplyability } =
     useCheckProceso({
       id: +(procesoId || 0),
     });
@@ -74,14 +74,14 @@ const ProcesosCover = () => {
   useEffect(() => {
     (async () => {
       if ((proceso?.habilidades?.length || 0) > 0) {
-        let ids = proceso?.habilidades?.map(
+        const ids = proceso?.habilidades?.map(
           (habilidad: IHabilidad) => habilidad.id
         );
-        let niveles = proceso?.habilidades?.map(
+        const niveles = proceso?.habilidades?.map(
           (habilidad: IHabilidad) => habilidad.meta?.pivot_nivel
         );
 
-        let certis = await getCertificacionesRequeridas({
+        const certis = await getCertificacionesRequeridas({
           query: [{ habilidades: `${[ids]}` }, { nivel: `[${niveles}]` }],
           certificacionesCompletadas:
             progresoGlobal?.meta?.certificacionesCompletadas || [],
@@ -111,7 +111,7 @@ const ProcesosCover = () => {
         progresoGlobal: { rutaId: proceso?.rutaId },
       })
         .then(async (response) => {
-          let dataRuta = await getRutaByID(proceso?.rutaId);
+          const dataRuta = await getRutaByID(proceso?.rutaId);
 
           setRuta({ ...dataRuta });
           onSuccess(toast, 'Se ha actualizado la hoja de ruta');
@@ -126,7 +126,7 @@ const ProcesosCover = () => {
       applyToProceso({ id: +procesoId })
         .then(() => {
           setIsInscrito(true);
-          let _user = { ...user };
+          const _user = { ...user };
           _user.procesos?.push(proceso);
 
           setUser({ ..._user });
@@ -146,7 +146,7 @@ const ProcesosCover = () => {
       removeFromProceso({ id: +procesoId })
         .then(() => {
           setIsInscrito(false);
-          let _user = { ...user };
+          const _user = { ...user };
           _user.procesos = _user.procesos?.filter((p) => p.id !== proceso?.id);
 
           setUser({ ..._user });
@@ -166,8 +166,8 @@ const ProcesosCover = () => {
   }, [proceso]);
 
   const refreshRuta = async () => {
-    let dataRuta = await getRutaByID(proceso?.rutaId);
-    let dataItinerario = await getCursos({
+    const dataRuta = await getRutaByID(proceso?.rutaId);
+    const dataItinerario = await getCursos({
       query: [{ ruta: dataRuta?.itinerario }],
       userId: user?.id,
     });

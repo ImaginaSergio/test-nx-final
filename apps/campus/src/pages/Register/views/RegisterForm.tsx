@@ -49,7 +49,7 @@ export const RegisterForm = () => {
   const isLastStep: boolean = activeStep === 5;
 
   useEffect(() => {
-    let userOnboarding = getItem(USER_ONBOARDING);
+    const userOnboarding = getItem(USER_ONBOARDING);
 
     if (userOnboarding) setLocalValues(userOnboarding);
 
@@ -57,7 +57,7 @@ export const RegisterForm = () => {
     TagManager.dataLayer({ dataLayer: { onBoarding: 'started' } });
 
     // Cogemos la ruta por defecto de la query
-    let ruta = query.get('ruta');
+    const ruta = query.get('ruta');
 
     if (['frontend', 'backend', 'fullstack'].includes(ruta || ''))
       setLocalValues((prev: any) =>
@@ -75,9 +75,9 @@ export const RegisterForm = () => {
   const submitForm = async (values: any) => {
     values.step = 5;
 
-    let userId = getItem(USER_ONBOARDING_ID);
-    let userToken = getItem(USER_ONBOARDING_TOKEN);
-    let userActivo = getItem(USER_ONBOARDING_ACTIVO);
+    const userId = getItem(USER_ONBOARDING_ID);
+    const userToken = getItem(USER_ONBOARDING_TOKEN);
+    const userActivo = getItem(USER_ONBOARDING_ACTIVO);
 
     if (userId)
       await updateUser({
@@ -289,8 +289,8 @@ export const RegisterForm = () => {
           // Enviamos a GTM el step activo
           TagManager.dataLayer({ dataLayer: { step: step } });
 
-          let userId = getItem(USER_ONBOARDING_ID);
-          let rndPassword = 'OpenBootcamp_' + Math.floor(Math.random() * 1001);
+          const userId = getItem(USER_ONBOARDING_ID);
+          const rndPassword = 'OpenBootcamp_' + Math.floor(Math.random() * 1001);
 
           switch (step) {
             case 1: {
@@ -306,7 +306,7 @@ export const RegisterForm = () => {
                 password_confirmation: rndPassword,
               };
 
-              let campanya: any = query.get('campanya'),
+              const campanya: any = query.get('campanya'),
                 grupoAnalitica: any = query.get('grupo'),
                 palabraClave: any = query.get('palabraClave');
 
@@ -367,8 +367,8 @@ export const RegisterForm = () => {
                   id: userId,
                   user: { preferencias: values.preferencias },
                 }).then((response) => {
-                  let ruta = values?.preferencias?.ruta;
-                  let progresoGlobalId =
+                  const ruta = values?.preferencias?.ruta;
+                  const progresoGlobalId =
                     response.value?.data?.progresoGlobal?.id;
 
                   if (progresoGlobalId)

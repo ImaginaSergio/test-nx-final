@@ -31,8 +31,7 @@ const Sidebar = () => {
   const disabledPages = process.env.REACT_APP_DISABLE_PAGES?.split(' ');
 
   return (
-    <>
-      <Flex
+    <Flex
         transition="all 0.1s linear"
         minW={{ base: '86px', '2xl': '230px' }}
         bg="white"
@@ -121,7 +120,6 @@ const Sidebar = () => {
           )}
         </Flex>
       </Flex>
-    </>
   );
 };
 

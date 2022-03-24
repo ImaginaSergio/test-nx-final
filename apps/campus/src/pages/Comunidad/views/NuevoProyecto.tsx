@@ -100,7 +100,7 @@ export const NuevoProyecto = () => {
   };
 
   const loadHabilidades = async (value: any) => {
-    let _habilidades = await getHabilidades({ query: [{ nombre: value }] });
+    const _habilidades = await getHabilidades({ query: [{ nombre: value }] });
 
     return _habilidades?.data?.map((hab: any) => ({
       value: hab.id,

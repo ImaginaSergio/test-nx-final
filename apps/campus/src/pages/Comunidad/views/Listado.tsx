@@ -219,7 +219,7 @@ const TabProyectos = ({
                     f.objetoId === proyecto.id
                 ),
                 onFav: () => {
-                  let fav = favoritos?.find(
+                  const fav = favoritos?.find(
                     (f) =>
                       f.tipo === FavoritoTipoEnum.PROYECTO &&
                       f.objetoId === proyecto.id
@@ -316,7 +316,7 @@ const TabProyectosPropios = ({
                     f.objetoId === proyecto.id
                 ),
                 onFav: () => {
-                  let fav = favoritos?.find(
+                  const fav = favoritos?.find(
                     (f) =>
                       f.tipo === FavoritoTipoEnum.PROYECTO &&
                       f.objetoId === proyecto.id

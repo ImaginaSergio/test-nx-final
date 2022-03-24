@@ -51,7 +51,7 @@ const Foro = () => {
     // ¡Solo pediremos votos al entrar en las preguntas!
 
     (async () => {
-      let dataVotos = await getVotos({
+      const dataVotos = await getVotos({
         query: [{ user_id: user?.id }, { limit: 10000 }],
       });
       setVotos([...(dataVotos || [])]);
@@ -63,7 +63,7 @@ const Foro = () => {
 
   const addVoto = (newVoto: IForoVoto, tipo: 'pregunta' | 'respuesta') => {
     // Validamos antes de meter votos duplicados
-    let key: 'preguntaId' | 'respuestaId' =
+    const key: 'preguntaId' | 'respuestaId' =
       tipo === 'pregunta' ? 'preguntaId' : 'respuestaId';
     if (votos.find((v) => v[key] == newVoto[key] && v.userId == newVoto.userId))
       return;
@@ -74,9 +74,9 @@ const Foro = () => {
   };
 
   const updateVoto = (newVoto: IForoVoto, tipo: 'pregunta' | 'respuesta') => {
-    let key: 'preguntaId' | 'respuestaId' =
+    const key: 'preguntaId' | 'respuestaId' =
       tipo === 'pregunta' ? 'preguntaId' : 'respuestaId';
-    let last: any[] = [...votos].map((v) =>
+    const last: any[] = [...votos].map((v) =>
       v[key] == newVoto[key] && v.id === newVoto.id ? newVoto : v
     );
 
@@ -86,9 +86,9 @@ const Foro = () => {
   };
 
   const removeVoto = (voto: IForoVoto, tipo: 'pregunta' | 'respuesta') => {
-    let key: 'preguntaId' | 'respuestaId' =
+    const key: 'preguntaId' | 'respuestaId' =
       tipo === 'pregunta' ? 'preguntaId' : 'respuestaId';
-    let last: any[] = [...votos]
+    const last: any[] = [...votos]
       .map((v) => (v[key] == voto[key] && v.id == voto.id ? undefined : v))
       .filter((v) => v);
 

@@ -26,7 +26,7 @@ export const FilterInput = ({ label, name, type, placeholder, isDisabled, defaul
   }, [defaultValue]);
 
   function onChange(event: any) {
-    let value = event.target.value;
+    const value = event.target.value;
 
     setValue(value);
   }

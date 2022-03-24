@@ -47,7 +47,7 @@ const CertificacionesCover = () => {
   }, []);
 
   useEffect(() => {
-    let stateData: any = location.state;
+    const stateData: any = location.state;
 
     if (location.state === null) setEstado('portada');
     else {

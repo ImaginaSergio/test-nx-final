@@ -15,7 +15,7 @@ const StepCredenciales = ({
 }) => {
   const validateUsername = async (value: string) => {
     let error;
-    let res: any = await checkIfUsernameExists({ username: value });
+    const res: any = await checkIfUsernameExists({ username: value });
 
     if (res?.isAxiosError || res.isError) error = res.message;
 

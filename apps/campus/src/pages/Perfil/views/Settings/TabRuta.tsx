@@ -33,7 +33,7 @@ export const TabRuta = () => {
       progresoGlobal: { rutaId: event },
     })
       .then(async (res) => {
-        let dataUser = await getUserByID({ id: user?.id || 0 });
+        const dataUser = await getUserByID({ id: user?.id || 0 });
 
         if (!dataUser.isAxiosError) {
           setUser({ ...dataUser });

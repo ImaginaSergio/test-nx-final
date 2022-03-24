@@ -114,8 +114,8 @@ const CertificacionesList = () => {
 
     _query += `&order=${order}`;
 
-    let auxQuery = _query.split('&').map((item) => {
-      let split = item.split('=');
+    const auxQuery = _query.split('&').map((item) => {
+      const split = item.split('=');
       return { [split[0]]: split[1] };
     });
 

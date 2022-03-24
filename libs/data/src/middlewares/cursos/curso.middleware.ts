@@ -2,17 +2,37 @@ import useSWR from 'swr';
 
 import { getProgresos } from './progreso.middleware';
 import { get, post, put, putFile, remove } from '../../services';
-import { ProgresoTipoEnum, IModulo, ILeccion, IProgreso, ICurso } from '../../models';
-import { POST_HttpResponse, PropsByID, PropsByQuery, PUT_HttpResponse, REMOVE_HttpResponse } from '../_middleware';
+import {
+  ProgresoTipoEnum,
+  IModulo,
+  ILeccion,
+  IProgreso,
+  ICurso,
+} from '../../models';
+import {
+  POST_HttpResponse,
+  PropsByID,
+  PropsByQuery,
+  PUT_HttpResponse,
+  REMOVE_HttpResponse,
+} from '../_middleware';
 import { extractQuery } from '../_utils';
 
 const ENDPOINT_ADMIN = '/godAPI/cursos/';
 const ENDPOINT_CAMPUS = '/openAPI/cursos/';
 
-export const getCurso = async ({ id, userId, client }: PropsByID & { userId?: number }) => {
-  const dataCurso = await get((client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + id);
+export const getCurso = async ({
+  id,
+  userId,
+  client,
+}: PropsByID & { userId?: number }) => {
+  const dataCurso = await get(
+    (client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + id
+  );
 
-  return client === 'admin' ? dataCurso.data : await treatDataCurso({ dataCurso, userId, client });
+  return client === 'admin'
+    ? dataCurso.data
+    : await treatDataCurso({ dataCurso, userId, client });
 };
 
 export const getCursos = async ({
@@ -25,24 +45,38 @@ export const getCursos = async ({
   treatData?: boolean;
 }) => {
   let [queryTxt, errors] = extractQuery(query);
-  const dataCursos = await get((client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + queryTxt);
+  const dataCursos = await get(
+    (client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS) + queryTxt
+  );
 
   if (!treatData || client === 'admin') return dataCursos.data;
   else return await treatDataCursos({ dataCursos, userId, client });
 };
 
-export const useCurso = ({ id = 0, userId, query = [], strategy = 'accept-all', client }: PropsByID & { userId?: number }) => {
-  if (!id || (strategy === 'invalidate-on-undefined' && query.find((q) => Object.values(q)?.find((q) => !q))))
+export const useCurso = ({
+  id = 0,
+  userId,
+  query = [],
+  strategy = 'accept-all',
+  client,
+}: PropsByID & { userId?: number }) => {
+  if (
+    !id ||
+    (strategy === 'invalidate-on-undefined' &&
+      query.find((q) => Object.values(q)?.find((q) => !q)))
+  )
     return { curso: undefined, isLoading: true, isError: undefined };
 
   let [queryTxt, errors] = extractQuery(query);
 
-  const { data, error } = useSWR(`${client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS}${id}${queryTxt}`, (e) =>
-    get(e).then((data) => {
-      if (data.isAxiosError) return { error: data };
-      else if (client === 'admin') return data?.data;
-      else return treatDataCurso({ dataCurso: data, userId, client });
-    })
+  const { data, error } = useSWR(
+    `${client === 'admin' ? ENDPOINT_ADMIN : ENDPOINT_CAMPUS}${id}${queryTxt}`,
+    (e) =>
+      get(e).then((data) => {
+        if (data.isAxiosError) return { error: data };
+        else if (client === 'admin') return data?.data;
+        else return treatDataCurso({ dataCurso: data, userId, client });
+      })
   );
 
   return {
@@ -58,7 +92,10 @@ export const useCursos = ({
   strategy = 'accept-all',
   client = 'campus',
 }: PropsByQuery & { userId?: number }) => {
-  if (strategy === 'invalidate-on-undefined' && query.find((q) => Object.values(q)?.find((q) => !q)))
+  if (
+    strategy === 'invalidate-on-undefined' &&
+    query.find((q) => Object.values(q)?.find((q) => !q))
+  )
     return { cursos: undefined, isLoading: true, isError: undefined };
 
   let [queryTxt, errors] = extractQuery(query);
@@ -93,13 +130,27 @@ const treatDataCurso = async ({
 
   const dataProgresos = await getProgresos({
     client,
-    query: [{ curso_id: dataCurso.data.id }, { tipo: ProgresoTipoEnum.COMPLETADO }, { user_id: userId }, { limit: 10000 }],
+    query: [
+      { curso_id: dataCurso.data.id },
+      { tipo: ProgresoTipoEnum.COMPLETADO },
+      { user_id: userId },
+      { limit: 10000 },
+    ],
   }); //TODO Adecuar límite de progreso (lo ideal sería infinito)
 
-  const duracionTotal = dataCurso.data.modulos?.reduce((acc: any, m: IModulo) => (acc += +(m.meta?.duracionTotal || 0)), 0);
-  const totalLecciones = dataCurso.data.modulos?.reduce((acc: any, m: IModulo) => (acc += +(m.lecciones?.length || 0)), 0);
+  const duracionTotal = dataCurso.data.modulos?.reduce(
+    (acc: any, m: IModulo) => (acc += +(m.meta?.duracionTotal || 0)),
+    0
+  );
+  const totalLecciones = dataCurso.data.modulos?.reduce(
+    (acc: any, m: IModulo) => (acc += +(m.lecciones?.length || 0)),
+    0
+  );
   const totalProgreso = dataProgresos?.meta?.total
-    ? Math.min(100, Math.floor((dataProgresos?.meta.total / totalLecciones) * 100))
+    ? Math.min(
+        100,
+        Math.floor((dataProgresos?.meta.total / totalLecciones) * 100)
+      )
     : 0;
 
   dataCurso.data.meta = {
@@ -118,14 +169,22 @@ const treatDataCurso = async ({
 
   dataCurso.data.modulos.forEach((modulo: IModulo, indexM: number) => {
     let isModuloBlocked = false;
-    const progresosDelModelo = dataProgresos?.data?.filter((p) => p.moduloId === modulo.id);
+    const progresosDelModelo = dataProgresos?.data?.filter(
+      (p) => p.moduloId === modulo.id
+    );
 
     modulo.lecciones?.sort((a: any, b: any) => a.orden - b.orden);
 
     modulo.lecciones?.forEach((leccion: ILeccion) => {
-      const current = progresosDelModelo?.find((p: IProgreso) => p.leccionId === leccion.id);
+      const current = progresosDelModelo?.find(
+        (p: IProgreso) => p.leccionId === leccion.id
+      );
 
-      leccion.meta = { ...leccion.meta, isCompleted: current !== undefined, indexOverModelo: ++countLeccionIndexOverModulos };
+      leccion.meta = {
+        ...leccion.meta,
+        isCompleted: current !== undefined,
+        indexOverModelo: ++countLeccionIndexOverModulos,
+      };
     });
 
     if (indexM === 0) isModuloBlocked = false;
@@ -133,7 +192,9 @@ const treatDataCurso = async ({
       const prevModulo = dataCurso.data.modulos[indexM - 1].lecciones;
 
       // Si el anterior módulo tiene alguna lección sin completar, este estará bloqueado.
-      isModuloBlocked = prevModulo?.find((l: any) => l.meta.isCompleted === false) !== undefined;
+      isModuloBlocked =
+        prevModulo?.find((l: any) => l.meta.isCompleted === false) !==
+        undefined;
     }
 
     modulo.lecciones?.forEach((leccion: ILeccion) => {
@@ -181,15 +242,29 @@ const treatDataCursos = async ({
       : { data: [] };
 
   for (const curso of dataCursos.data.data) {
-    const dataProgresos = dataProgresosTotal?.data?.filter((p) => p.cursoId === curso.id) || [];
+    const dataProgresos =
+      dataProgresosTotal?.data?.filter((p) => p.cursoId === curso.id) || [];
 
-    const duracionTotal = curso.modulos?.reduce((acc: any, m: IModulo) => (acc += +(m.meta?.duracionTotal || 0)), 0);
-    const totalLecciones = curso.modulos?.reduce((acc: any, m: IModulo) => (acc += +(m.meta?.leccionesCount || 0)), 0);
+    const duracionTotal = curso.modulos?.reduce(
+      (acc: any, m: IModulo) => (acc += +(m.meta?.duracionTotal || 0)),
+      0
+    );
+    const totalLecciones = curso.modulos?.reduce(
+      (acc: any, m: IModulo) => (acc += +(m.meta?.leccionesCount || 0)),
+      0
+    );
     const totalProgreso =
-      dataProgresos?.length > 0 ? Math.min(100, Math.floor((dataProgresos?.length / totalLecciones) * 100)) : 0;
+      dataProgresos?.length > 0
+        ? Math.min(
+            100,
+            Math.floor((dataProgresos?.length / totalLecciones) * 100)
+          )
+        : 0;
 
     // Contamos el número de modulos que hay, sin tener en cuenta repetidos.
-    const modulosCompletados = new Set(dataProgresos?.map((p) => p.moduloId) || []).size;
+    const modulosCompletados = new Set(
+      dataProgresos?.map((p) => p.moduloId) || []
+    ).size;
 
     curso.meta = {
       duracionTotal: duracionTotal,
@@ -206,7 +281,10 @@ const treatDataCursos = async ({
 };
 
 /** Filtra todos los cursos del listado que pertenezcan a la hoja de ruta indicada, ordenándolos segun la hoja de ruta */
-export const filterCursosByRuta = (ruta: number[] = [], cursos: ICurso[] = []): ICurso[] => {
+export const filterCursosByRuta = (
+  ruta: number[] = [],
+  cursos: ICurso[] = []
+): ICurso[] => {
   const localCopy = [...cursos];
 
   const res: any[] = [];
@@ -217,7 +295,10 @@ export const filterCursosByRuta = (ruta: number[] = [], cursos: ICurso[] = []): 
 };
 
 /** Filtra todos los cursos del listado que NO pertenezcan a la hoja de ruta indicada */
-export const filterCursosOutsideRuta = (ruta: number[] = [], cursos: ICurso[] = []): ICurso[] => {
+export const filterCursosOutsideRuta = (
+  ruta: number[] = [],
+  cursos: ICurso[] = []
+): ICurso[] => {
   return [...cursos]?.filter((c: any) => !ruta?.includes(c.id));
 };
 
@@ -231,12 +312,17 @@ export const addCurso = ({ curso }: { curso: ICurso }) => {
     .catch((error: POST_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -252,12 +338,17 @@ export const updateCurso = ({ id, curso }: PropsByID & { curso: any }) => {
     .catch((error: PUT_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -278,12 +369,17 @@ export const updateCursoFile = (id: string, name: string, file: File) => {
     .catch((error: PUT_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });
@@ -299,12 +395,17 @@ export const removeCurso = ({ id }: PropsByID) => {
     .catch((error: REMOVE_HttpResponse) => {
       let message;
 
-      if (error.errors && error.errors.length > 0) message = error.errors.reduce((acc, err) => (acc += `\n${err.message}`), '');
+      if (error.errors && error.errors.length > 0)
+        message = error.errors.reduce(
+          (acc, err) => (acc += `\n${err.message}`),
+          ''
+        );
       else message = error.message;
 
       throw {
         title: 'Error inesperado',
-        message: message || 'Por favor, prueba otra vez o contacta con soporte.',
+        message:
+          message || 'Por favor, prueba otra vez o contacta con soporte.',
         error,
       };
     });

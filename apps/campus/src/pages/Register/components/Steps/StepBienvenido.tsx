@@ -34,15 +34,15 @@ const StepBienvenido = ({
   };
 
   const getCountryOptions = () => {
-    let options = Country.getAllCountries().map((c: any) => ({
+    const options = Country.getAllCountries().map((c: any) => ({
       label: c.flag + ' ' + c.name,
       value: `{ "label":"${c.name}", "value":"${c.isoCode}"}`,
     }));
 
-    let spainIndex = options.findIndex((o) => o.label.includes('Spain'));
+    const spainIndex = options.findIndex((o) => o.label.includes('Spain'));
 
     if (spainIndex) {
-      let auxSpain = options[spainIndex],
+      const auxSpain = options[spainIndex],
         auxFirst = options[0];
 
       options[0] = auxSpain;

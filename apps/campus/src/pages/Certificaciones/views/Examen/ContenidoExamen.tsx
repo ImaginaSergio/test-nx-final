@@ -140,8 +140,8 @@ export const ContenidoExamen = ({
   }, [progress]);
 
   const handleWindowLeave = (e: any) => {
-    let mouseY = e.clientY;
-    let topValue = 0;
+    const mouseY = e.clientY;
+    const topValue = 0;
 
     if (mouseY < topValue) onOpen_Integridad();
   };

@@ -31,10 +31,10 @@ export const AbandonarModal = ({
 }) => {
   const { user } = useContext(LoginContext);
 
-  let certificacion = user?.certificaciones?.find(
+  const certificacion = user?.certificaciones?.find(
     (c) => c.id === examen?.certificacionId
   );
-  let numIntentosRestante =
+  const numIntentosRestante =
     (examen?.numIntentos || 0) - (certificacion?.meta?.pivot_intento || 0);
 
   return (

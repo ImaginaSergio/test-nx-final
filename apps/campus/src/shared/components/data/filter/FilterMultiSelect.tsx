@@ -32,7 +32,7 @@ export const FilterMultiSelect = ({
   const onChange = (event: any) => {
     if (event.length < data?.length) return;
 
-    let newData = [...event]?.map((item: any, i: number) => {
+    const newData = [...event]?.map((item: any, i: number) => {
       if (!item.id) return undefined;
 
       item.meta = {
@@ -53,11 +53,11 @@ export const FilterMultiSelect = ({
   };
 
   const updateLevel = (index: number) => {
-    let newData = [...data]?.map((item: any, i: number) => {
+    const newData = [...data]?.map((item: any, i: number) => {
       if (!item.id) return undefined;
 
       if (i === index) {
-        let newLevel = item.meta[extra.metaName] === 3 ? 1 : item.meta[extra.metaName] + 1;
+        const newLevel = item.meta[extra.metaName] === 3 ? 1 : item.meta[extra.metaName] + 1;
 
         item.meta[extra.metaName] = newLevel;
       }
@@ -95,8 +95,7 @@ export const FilterMultiSelect = ({
 
       <Flex wrap="wrap" gap="10px">
         {data?.map((item: { label: string; value: any; meta: any }, index: number) => (
-          <>
-            <Badge
+          <Badge
               display="flex"
               p="5px 12px"
               gap="8px"
@@ -125,7 +124,6 @@ export const FilterMultiSelect = ({
                 </Center>
               </Flex>
             </Badge>
-          </>
         ))}
       </Flex>
     </Flex>

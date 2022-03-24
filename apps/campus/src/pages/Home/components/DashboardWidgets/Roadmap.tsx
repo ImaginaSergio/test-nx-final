@@ -36,11 +36,11 @@ export const RoadmapWidget = () => {
 
   useEffect(() => {
     if ((cursos_Roadmap?.length || 0) > 0) {
-      let cursosSorted = filterCursosByRuta(
+      const cursosSorted = filterCursosByRuta(
         ruta?.meta?.itinerario,
         cursos_Roadmap
       );
-      let index = cursosSorted.findIndex((c: ICurso) =>
+      const index = cursosSorted.findIndex((c: ICurso) =>
         progresoGlobal?.meta?.cursosIniciados?.includes(c.id || 0)
       );
 

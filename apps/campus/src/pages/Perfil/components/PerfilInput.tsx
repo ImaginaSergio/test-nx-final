@@ -27,7 +27,7 @@ export const PerfilInput = ({ name, label, isDisabled, onChange, defaultValue, p
 
   async function handleBlur(event: any) {
     if (onValidate) {
-      let _errors = await onValidate(value);
+      const _errors = await onValidate(value);
 
       if (onChange && !_errors) onChange({ [name]: value });
       else if (_errors) setErrors(_errors);

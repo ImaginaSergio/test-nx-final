@@ -11,7 +11,7 @@ export const ProtectedRoute = ({ component, isAuthenticated, redirectTo = 'login
 };
 
 export const RequireAuth = ({ redirectTo = '/login', isAuthenticated = false }: any) => {
-  let location = useLocation();
+  const location = useLocation();
 
   if (!isAuthenticated) {
     // Redirect them to the /login page, but save the current location they were

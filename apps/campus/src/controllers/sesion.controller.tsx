@@ -56,7 +56,7 @@ export const SesionController = () => {
   const refreshSesionState = async () => {
     // Al abrir el navegador (Siempre y cuando estemos registrados), empezamos una nueva sesión.
     if (user && !currentSesion) {
-      let sesion = await getSesionActual();
+      const sesion = await getSesionActual();
 
       if (sesion?.value?.id) setCurrentSesion(sesion?.value);
       else
@@ -80,7 +80,7 @@ export const SesionController = () => {
   const refreshProgresoContext = async () => {
     if (!user?.id) return;
 
-    let _user = await getUserByID({ id: user?.id });
+    const _user = await getUserByID({ id: user?.id });
     setProgresoGlobal(
       _user?.progresoGlobal ? { ..._user.progresoGlobal } : null
     );
@@ -119,8 +119,8 @@ export const SesionController = () => {
   const onIdle = () => {
     if (!currentSesion?.id) return undefined;
 
-    let startTime = new Date(getLasttimeActive());
-    let endTime = new Date();
+    const startTime = new Date(getLasttimeActive());
+    const endTime = new Date();
 
     updateSesion({
       id: currentSesion.id,

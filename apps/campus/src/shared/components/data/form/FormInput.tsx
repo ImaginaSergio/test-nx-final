@@ -155,7 +155,7 @@ export const InformationInput = ({
   }, [defaultValue]);
 
   function onChange(event: any) {
-    let value = event.target.value;
+    const value = event.target.value;
     if (update === 'idle') setUpdate('editing');
 
     setValue(value);

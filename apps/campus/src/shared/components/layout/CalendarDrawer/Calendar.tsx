@@ -89,13 +89,13 @@ export const Calendar = ({ date: _date, events, daysDisabled, onDateChange, ...p
     let dayOfTheWeek = getDay(new Date(date.getFullYear(), date.getMonth(), 1));
     let dayOfTheMonth = 1;
     let isOtherMonth = false;
-    let totalDaysInMonth = getDaysInMonth(date);
+    const totalDaysInMonth = getDaysInMonth(date);
 
-    let weeksInCalendar = [];
+    const weeksInCalendar = [];
 
     for (let i = 0; i < 5; i++) {
       // Añadimos el primer día de la semana
-      let week = [];
+      const week = [];
 
       // Si ya hemos pasado de mes, lo guardamos para futuras referencias.
       let monthDate = isOtherMonth ? addMonths(date, +1) : date;
@@ -104,12 +104,12 @@ export const Calendar = ({ date: _date, events, daysDisabled, onDateChange, ...p
       // empieza en lunes, rellenamos la semana con días del mes anterior.
       if (i === 0 && dayOfTheWeek !== firstDayOfWeek) {
         let auxDayOfWeek = firstDayOfWeek;
-        let prevMonthDate = addMonths(date, -1);
+        const prevMonthDate = addMonths(date, -1);
         let auxDayOfMonth = getDaysInMonth(prevMonthDate) - dayOfTheWeek + 1;
 
         // Vamos añadiendo días hasta que el lleguemos al día 1 del mes actual.
         while (auxDayOfWeek < dayOfTheWeek) {
-          let cellDate = new Date(getYear(prevMonthDate), getMonth(prevMonthDate), auxDayOfMonth);
+          const cellDate = new Date(getYear(prevMonthDate), getMonth(prevMonthDate), auxDayOfMonth);
           week.push({
             dayOfTheWeek: auxDayOfWeek++,
             dayOfTheMonth: auxDayOfMonth++,
@@ -119,7 +119,7 @@ export const Calendar = ({ date: _date, events, daysDisabled, onDateChange, ...p
         }
       }
 
-      let cellDate = new Date(getYear(monthDate), getMonth(monthDate), dayOfTheMonth);
+      const cellDate = new Date(getYear(monthDate), getMonth(monthDate), dayOfTheMonth);
       week.push({
         dayOfTheWeek: dayOfTheWeek++,
         dayOfTheMonth: dayOfTheMonth++,
@@ -139,7 +139,7 @@ export const Calendar = ({ date: _date, events, daysDisabled, onDateChange, ...p
           monthDate = isOtherMonth ? addMonths(date, +1) : date;
         }
 
-        let cellDate = new Date(getYear(monthDate), getMonth(monthDate), dayOfTheMonth);
+        const cellDate = new Date(getYear(monthDate), getMonth(monthDate), dayOfTheMonth);
         week.push({
           dayOfTheWeek: dayOfTheWeek++,
           dayOfTheMonth: dayOfTheMonth++,

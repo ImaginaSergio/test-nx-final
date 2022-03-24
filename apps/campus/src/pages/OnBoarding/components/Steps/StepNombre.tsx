@@ -22,13 +22,13 @@ const StepNombre = ({
 
   const makePasswd = () => {
     let passwd = '';
-    let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let nums = '0123456789';
-    let special = '*';
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const nums = '0123456789';
+    const special = '*';
 
     for (let i = 1; i < 8; i++) {
-      var c = Math.floor(Math.random() * chars.length + 1);
-      var n = Math.floor(Math.random() * nums.length + 1);
+      const c = Math.floor(Math.random() * chars.length + 1);
+      const n = Math.floor(Math.random() * nums.length + 1);
       passwd += chars.charAt(c) + nums.charAt(n) + special;
     }
 

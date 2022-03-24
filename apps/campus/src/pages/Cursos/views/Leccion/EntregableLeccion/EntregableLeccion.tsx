@@ -90,13 +90,13 @@ export const EntregableLeccion = ({
 
   useEffect(() => {
     (async () => {
-      let entregableData = await getEntregables({
+      const entregableData = await getEntregables({
         query: [{ leccion_id: leccion?.id }, { user_id: user?.id }],
       });
 
       //  Si está creado, lo agregamos al estado
       if (entregableData?.meta?.total === 1) {
-        let _entregable = entregableData.data[0];
+        const _entregable = entregableData.data[0];
 
         setEntregable(_entregable);
         setEstado(_entregable.estado);
@@ -136,7 +136,7 @@ export const EntregableLeccion = ({
         },
       })
         .then(async (response) => {
-          let entregableData = await getEntregables({
+          const entregableData = await getEntregables({
             query: [{ leccion_id: leccion?.id }, { user_id: user?.id }],
           });
 
@@ -163,7 +163,7 @@ export const EntregableLeccion = ({
   };
 
   const realizarEntrega = async () => {
-    let entregableData = await getEntregables({
+    const entregableData = await getEntregables({
       query: [{ leccion_id: leccion?.id }, { user_id: user?.id }],
     });
 

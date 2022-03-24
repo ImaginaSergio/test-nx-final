@@ -72,7 +72,7 @@ export const PageHeader = ({
   useEffect(() => {
     if (searchTimeout) clearTimeout(searchTimeout);
 
-    let timeout = setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (onQuery)
         onQuery(
           order,

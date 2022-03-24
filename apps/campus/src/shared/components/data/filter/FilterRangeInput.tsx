@@ -37,13 +37,13 @@ export const FilterRangeInput = ({ label, isDisabled, updateValue, minInput, max
   }, [minInput.defaultValue, maxInput.defaultValue]);
 
   function onChangeMin(event: any) {
-    let value = event.target.value;
+    const value = event.target.value;
 
     setValueMin(value);
   }
 
   function onChangeMax(event: any) {
-    let value = event.target.value;
+    const value = event.target.value;
 
     setValueMax(value);
   }

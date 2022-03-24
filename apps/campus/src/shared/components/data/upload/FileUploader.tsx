@@ -56,7 +56,7 @@ const FileUploader = ({
   }, []);
 
   const parseSize = (size: string) => {
-    let match = size.match(regex);
+    const match = size.match(regex);
     let magnitude = 1;
 
     if (match)

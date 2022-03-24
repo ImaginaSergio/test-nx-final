@@ -64,10 +64,10 @@ const Portada = () => {
   }, []);
 
   useEffect(() => {
-    let state: any = location.state;
+    const state: any = location.state;
 
     if (curso?.id && state?.moduloId) {
-      let modulo = curso?.modulos?.find((m: any) => m.id == state?.moduloId);
+      const modulo = curso?.modulos?.find((m: any) => m.id == state?.moduloId);
 
       if (modulo?.lecciones?.length > 0)
         navigate(`/cursos/${cursoId}/leccion/${modulo.lecciones[0].id}`);

@@ -46,7 +46,7 @@ export const AsistenciaModal = ({
   useEffect(() => {
     (async () => {
       if (grupo) {
-        let _users = await getUsers({
+        const _users = await getUsers({
           query: [{ grupo_id: grupo.id }, { limit: 10000 }],
         });
 
@@ -72,9 +72,9 @@ export const AsistenciaModal = ({
   const sendAsistencia = () => {
     if (!leccion?.id) return;
 
-    let asistencias: any = {};
+    const asistencias: any = {};
 
-    for (let user of users) {
+    for (const user of users) {
       asistencias[user.id] = { confirmado: user.asistencia };
     }
 

@@ -18,7 +18,7 @@ export const TabAdmin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>();
 
   const loadUsersByEmail = async (value: string) => {
-    let _users = await getUsers({ query: [{ email: value }] });
+    const _users = await getUsers({ query: [{ email: value }] });
     return _users?.data?.map((user: any) => ({
       value: user.id,
       label: user.email,

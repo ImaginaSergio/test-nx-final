@@ -52,7 +52,7 @@ const CertificacionesExam = () => {
   }, [certificacionId]);
 
   const refreshState = async () => {
-    let examenData = await getExamenByID({ id: +(examenId || 0) });
+    const examenData = await getExamenByID({ id: +(examenId || 0) });
     setExamen(examenData);
   };
 
@@ -71,7 +71,7 @@ const CertificacionesExam = () => {
         setEstado('iniciado');
 
         if (user?.id) {
-          let _user = await getUserByID({ id: user?.id });
+          const _user = await getUserByID({ id: user?.id });
           setUser({ ..._user });
         }
       })
@@ -86,14 +86,14 @@ const CertificacionesExam = () => {
         if (user?.id) {
           // Actualizamos el valor de la context de nuestro usuario, para actualizar el array
           // de certificaciones con este intento, además de otros valores del progreso global.
-          let _user = await getUserByID({ id: user?.id });
+          const _user = await getUserByID({ id: user?.id });
           setUser({ ..._user });
 
           // Calculamos el número de intentos restantes
-          let certificacion = _user?.certificaciones?.find(
+          const certificacion = _user?.certificaciones?.find(
             (c: any) => c.id === examen?.certificacionId
           );
-          let numIntentosRestante =
+          const numIntentosRestante =
             (examen?.numIntentos || 0) -
             (certificacion?.meta?.pivot_intento || 0);
 

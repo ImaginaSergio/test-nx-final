@@ -63,7 +63,7 @@ export const CardLoader = ({ ...props }) => {
   }, []);
 
   const handleCardMaxWidth = () => {
-    let width = window.innerWidth;
+    const width = window.innerWidth;
 
     if (width > 1440) setMaxW('calc(100%/5 - 20px)');
     else if (width > 1024) setMaxW('calc(100%/4 - 20px)');
