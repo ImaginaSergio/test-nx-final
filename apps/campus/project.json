@@ -10,7 +10,7 @@
       "options": {
         "compiler": "babel",
         "outputPath": "dist/apps/campus",
-        "index": "apps/campus/src/index.html",
+        "index": "apps/campus/src/public/index.html",
         "baseHref": "/",
         "main": "apps/campus/src/index.tsx",
         "polyfills": "apps/campus/src/polyfills.ts",
